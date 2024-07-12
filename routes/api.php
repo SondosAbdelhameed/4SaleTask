@@ -32,6 +32,6 @@ Route::middleware(JWTCheckAuth::class)->group(function () {
 
     });
     Route::post('order',[OrderController::class,'store']);
-   // Route::post('pay',[OrderController::class,'pay']);
+    Route::post('pay',[OrderController::class,'pay']);
 
 });

@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Services\OrderService;
 use App\Http\Requests\Api\StoreOrderRequest;
+use App\Http\Requests\Api\PayOrderRequest;
 use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use App\Services\OrderFinalCost\OrderCostContext;
+
 
 class OrderController extends Controller
 {
@@ -86,5 +89,16 @@ class OrderController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function pay(PayOrderRequest $request) {
+        $order = Order::find($request->order_id);
+        $strategyService = new OrderCostContext($request->pay_way);
+
+        $cost = $strategyService->pay($order->sub_total);
+        $cost['paid'] = $request->amount_paied; 
+        $order->update($cost);
+
+        return "Paid successfully";
     }
 }
