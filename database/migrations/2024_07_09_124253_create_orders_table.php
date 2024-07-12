@@ -17,8 +17,11 @@ return new class extends Migration
             $table->unsignedSmallInteger('table_id');
             $table->foreignId('reservation_id');
             $table->foreignId('customer_id');
-            $table->float('total');
-            $table->float('paid');
+            $table->float('sub_total')->default(0);
+            $table->float('tax')->default(0);
+            $table->float('service')->default(0);
+            $table->float('total')->default(0);
+            $table->float('paid')->default(0);
             $table->dateTime('date');
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
