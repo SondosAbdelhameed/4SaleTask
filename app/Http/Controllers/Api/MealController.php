@@ -11,8 +11,12 @@ use App\Models\Meal;
 class MealController extends Controller
 {
     public function listMenuItems() {
-        $meals = new Meal;
-        return( $meals->availableMeal());
-        return MealResource::collection($meals->availableMeal());
+        //$meal = Meal::withSum('todayOrderMeals','quantity')->get();
+        $meals = Meal::all();
+        //return $meal;
+        //return Meal::with('todayOrderMeals')->get();
+        //$meals = Meal::available()->get();
+        //$meals = new Meal();
+        return MealResource::collection($meals);
     }
 }

@@ -13,14 +13,12 @@ return new class extends Migration
     {
         Schema::create('order_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedSmallInteger('table_id');
             $table->foreignId('order_id');
             $table->foreignId('meal_id');
             $table->unsignedTinyInteger('quantity');
             $table->float('price');
             $table->float('discount');
             $table->float('amount_to_pay');
-            $table->dateTime('date');
             $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
