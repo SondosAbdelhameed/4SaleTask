@@ -32,13 +32,11 @@ class Meal extends Model
         return $this->available_quantity - $this->todayOrderMeals()->sum('quantity');
     }
 
-    /*public function todayOrderMeals() {
+    public function todayOrderMeals() {
         return $this->hasMany(OrderDetail::class,'meal_id','id')->whereDate('created_at',Carbon::today());
     }
 
-    public function available() {
-        dd($this->todayOrderMeals()->sum(''));
-        $quantity = $this->todayOrderMeals()->sum('quantity');
-        return $query->where('available_quantity', '>' ,$quantity);
-    }*/
+    public function mealOrders() {
+        return $this->hasMany(OrderDetail::class,'meal_id','id');
+    }
 }
