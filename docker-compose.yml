@@ -15,8 +15,6 @@ services:
     depends_on:
       - app
       - db
-    networks:
-      - laravel
 
   #Database Service
   db:
@@ -31,8 +29,6 @@ services:
       - MYSQL_USERNAME=${DB_USERNAME}
       - MYSQL_PASSWORD=${DB_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-    networks:
-      - laravel
 
   # Application Service
   app:
@@ -46,11 +42,3 @@ services:
     ports:
       - "9000:9000"
     working_dir: /var/www
-    networks:
-      - laravel
-volumes:
-  db:
-    driver: local
-networks:
-  laravel:
-    driver: bridge
