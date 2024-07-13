@@ -1,50 +1,56 @@
-version: "3.7"
+version: '3.8'
+
 services:
-  app:
-    build:
-      args:
-        user: sondos
-        uid: 1000
-      context: ./
-      dockerfile: Dockerfile
-    image: 4sale-php
-    tty: true
-    container_name: 4sale-php
-    restart: unless-stopped
-    working_dir: /var/www/
-    volumes:
-      - ./:/var/www
-      - $HOME/.composer/:$HOME/.composer/
-    networks:
-      - laravel
-  db:
-    image: mysql:8.0
-    container_name: db-4sale
-    restart: unless-stopped
-    ports:
-      - 3308:3306
-    environment:
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_USER: ${DB_USERNAME}
-      SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
-    volumes:
-      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
-    networks:
-      - laravel
+
+  # Web Server Service
   nginx:
     image: nginx:alpine
     container_name: 4sale-nginx
-    restart: unless-stopped
     ports:
-      - 8001:80
+      - "8080:80"
     volumes:
       - ./:/var/www
-      - ./docker-compose/nginx:/etc/nginx/conf.d/
+      - ./docker-compose/nginx/conf.d/:/etc/nginx/conf.d/
+    tty: true
+    depends_on:
+      - app
+      - db
     networks:
       - laravel
+
+  #Database Service
+  db:
+    image : mysql
+    container_name : db-4sale
+    volumes:
+      - ./docker-compose/mysql/data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USERNAME=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+    networks:
+      - laravel
+
+  # Application Service
+  app:
+    container_name: 4sale-php
+    image: 4sale-php
+    build: 
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/var/www
+    ports:
+      - "9000:9000"
+    working_dir: /var/www
+    networks:
+      - laravel
+volumes:
+  db:
+    driver: local
 networks:
   laravel:
     driver: bridge
