@@ -17,13 +17,13 @@ class TableController extends Controller
 
         $table = $this->checkCapacity($request->table_id , $request->guest_count);
         if($table){
-            return "This table is not available";
+            return response()->json(['status' => ['code'=>409,'message'=>'This table is not available']]);
         }
         $reservation = $this->checkReservation($request->table_id,$request->certain_datetime);
         if($reservation)
-            return "This table is not available";
+        return response()->json(['status' => ['code'=>409,'message'=>'This table is not available']]);
         
-        return "This table is available";
+        return response()->json(['status' => ['code'=>200,'message'=>'This table is available']]);
     }
 
     

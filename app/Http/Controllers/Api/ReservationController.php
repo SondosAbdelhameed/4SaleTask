@@ -15,13 +15,14 @@ class ReservationController extends Controller
     public function reserveTable(ReservationRequest $request) {
         $reservation = $this->checkReservation($request->table_id,$request->from_time);
         if($reservation)
-            return "This table is not available";
+            return response()->json(['status' => ['code'=>409,'message'=>'This table is not available']]);
+        
         $customer_id = $this->getCustomer($request->customer_name,$request->customer_phone);
         unset($request['customer_name']);
         unset($request['customer_phone']);
         $request['customer_id'] = $customer_id;   
         $reservation = Reservation::create($request->all());
-        return "Resrvation Added Successfully";
+        return response()->json(['status' => ['code'=>200,'message'=>'Resrvation Added Successfully']]);
     }
 
     public function getCustomer($name,$phone) {
