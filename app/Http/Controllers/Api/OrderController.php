@@ -53,10 +53,10 @@ class OrderController extends Controller
                 $order->save();
             });
         } catch (Exception $e) {
-            return "there is somethig wrong , please try again later";
+            return response()->json(['status' => ['code'=>500,'message'=>'there is somethig wrong , please try again later']]);
         }
 
-        return "Save Order Successfully";
+        return response()->json(['status' => ['code'=>200,'message'=>'Save Order Successfully']]);
     }
 
     /**
@@ -99,6 +99,6 @@ class OrderController extends Controller
         $cost['paid'] = $request->amount_paied; 
         $order->update($cost);
 
-        return "Paid successfully";
+        return response()->json(['status' => ['code'=>200,'message'=>'Paid successfully']]);
     }
 }
