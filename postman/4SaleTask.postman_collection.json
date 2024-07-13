@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "15bb764a-d0ff-4d64-9854-305c06bdf267",
+		"name": "4SaleTask",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2004750"
+	},
+	"item": [
+		{
+			"name": "Check Availability",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/check_availability?table_id=1&guest_count=2&certain_datetime=2024-07-05 11:00:00",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"check_availability"
+					],
+					"query": [
+						{
+							"key": "table_id",
+							"value": "1"
+						},
+						{
+							"key": "guest_count",
+							"value": "2"
+						},
+						{
+							"key": "certain_datetime",
+							"value": "2024-07-05 11:00:00"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Reserve Table",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "customer_name",
+							"value": "Ahmed",
+							"type": "text"
+						},
+						{
+							"key": "customer_phone",
+							"value": "01003366990",
+							"type": "text"
+						},
+						{
+							"key": "table_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "from_time",
+							"value": "2024-07-15 12:00:00",
+							"type": "text"
+						},
+						{
+							"key": "to_time",
+							"value": "2024-07-15 12:00:05",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/reserve_table",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"reserve_table"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Menu Items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/list_menu_items",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"list_menu_items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Order",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MjA2OTcxODQsImV4cCI6MTcyMDcwMDc4NCwibmJmIjoxNzIwNjk3MTg0LCJqdGkiOiIxRURxeDd4YVEyS1VDRVNiIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.rDDmbMkF8iPxUBpHGewqICzI43xDk9uRXXkLcOU4IDQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"table_id\" : 1,\n    \"customer_id\" : 1,\n    \"reservation_id\" : 1,\n    \"user_id\" : 1,\n    \"items\" : [\n        {\n            \"meal_id\" : 1,\n            \"quantity\" : 2\n\n        },\n        {\n            \"meal_id\" : 2,\n            \"quantity\" : 2\n\n        },\n        {\n            \"meal_id\" : 3,\n            \"quantity\" : 3\n\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/order",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pay",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MjA4Mjc1NTQsImV4cCI6MTcyMDgzMTE1NCwibmJmIjoxNzIwODI3NTU0LCJqdGkiOiJmbkhHUlAzV1ZDSG9vQ0xuIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.8sx8Fd2lCsjVAmE4NLbLm60j-SpuJUeYLgDquQABX8w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"order_id\" : 1,\n    \"pay_way\" : 2,\n    \"amount_paied\" : 2500\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/pay",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"pay"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "email",
+							"value": "audreanne.cremin@example.org",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/auth/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
